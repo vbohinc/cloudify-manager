@@ -127,14 +127,15 @@ def delete(ctx,
                        '(if applicable)'),
         ctx.execute_task('riemann_controller.tasks.delete'))
 
-    for task in graph.tasks_iter():
-        _ignore_task_on_fail_and_send_event(task, ctx)
+    sequence.add(
+        ctx.send_event('Deleting deployment work directory'),
+        ctx.local_task(_delete_deployment_workdir))
 
-    try:
-        return graph.execute()
-    finally:
-        _delete_deployment_workdir(ctx)
-        _delete_logs(ctx)
+    sequence.add(
+        ctx.send_event('Deleting logs'),
+        ctx.local_task(_delete_logs))
+
+    return graph.execute()
 
 
 def _delete_logs(ctx):
