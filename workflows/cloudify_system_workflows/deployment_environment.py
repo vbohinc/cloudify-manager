@@ -129,16 +129,20 @@ def delete(ctx,
 
     sequence.add(
         ctx.send_event('Deleting deployment work directory'),
-        ctx.local_task(_delete_deployment_workdir))
+        ctx.local_task(_delete_deployment_workdir,
+                       kwargs={'deployment_id': ctx.deployment.id,
+                               'tenant': ctx.tenant_name,
+                               'logger': ctx.logger}))
 
-    sequence.add(
-        ctx.send_event('Deleting logs'),
-        ctx.local_task(_delete_logs))
+    #sequence.add(
+    #    ctx.send_event('Deleting logs'),
+    #    ctx.local_task(_delete_logs))
 
     return graph.execute()
 
 
 def _delete_logs(ctx):
+    return
     log_dir = os.environ.get('CELERY_LOG_DIR')
     if log_dir:
         log_file_path = os.path.join(log_dir, 'logs',
@@ -207,14 +211,14 @@ def _create_deployment_workdir(deployment_id, logger, tenant):
             raise
 
 
-def _delete_deployment_workdir(ctx):
-    deployment_workdir = _workdir(ctx.deployment.id, ctx.tenant_name)
+def _delete_deployment_workdir(deployment_id, logger, tenant):
+    deployment_workdir = _workdir(deployment_id, tenant)
     if not os.path.exists(deployment_workdir):
         return
     try:
         shutil.rmtree(deployment_workdir)
     except os.error:
-        ctx.logger.warning('Failed deleting directory {0}. '
+        logger.warning('Failed deleting directory {0}. '
                            'Current directory content: {1}'.format(
                                 deployment_workdir,
                                 os.listdir(deployment_workdir), exc_info=True))
