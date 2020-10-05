@@ -28,7 +28,7 @@ install_requires = [
     'supervise==1.1.1',
     'cloudify-dsl-parser==4.4.dev1',
     'requests>=2.7.0,<3.0.0',
-    'gunicorn==18.0',
+    'gunicorn==19.5.0',
     'PyYAML==3.10',
     'elasticsearch==1.6.0',
     'celery==3.1.17',
