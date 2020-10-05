@@ -29,7 +29,7 @@ install_requires = [
     'cloudify-dsl-parser==4.4.dev1',
     'requests>=2.7.0,<3.0.0',
     'gunicorn==18.0',
-    'PyYAML==3.10',
+    'PyYAML==5.1',
     'elasticsearch==1.6.0',
     'celery==3.1.17',
     'psutil==3.3.0',
