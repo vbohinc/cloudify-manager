@@ -32,7 +32,7 @@ install_requires = [
     'PyYAML==3.10',
     'elasticsearch==1.6.0',
     'celery==3.1.17',
-    'psutil==3.3.0',
+    'psutil==5.6.6',
     'jsonpickle==0.9.2',
     'wagon[venv]==0.6.3',
     'python-dateutil==2.5.3',
