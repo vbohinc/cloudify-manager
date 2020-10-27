@@ -32,6 +32,6 @@ setup(
         'elasticsearch==1.6.0',
         'retrying==1.3.3',
         'psycopg2==2.7',
-        'cryptography==2.1.4',
+        'cryptography==3.2',
     ]
 )
